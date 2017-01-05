@@ -10,6 +10,20 @@ VM_CPU = ENV['VM_CPU'] || 2
 # Amount of available RAM
 VM_MEMORY = ENV['VM_MEMORY'] || 3072
 
+# Validate required plugins
+REQUIRED_PLUGINS = %w(landrush)
+errors = []
+
+def message(name)
+  "#{name} plugin is not installed, run `vagrant plugin install #{name}` to install it."
+end
+# Validate and collect error message if plugin is not installed
+REQUIRED_PLUGINS.each { |plugin| errors << message(plugin) unless Vagrant.has_plugin?(plugin) }
+unless errors.empty?
+  msg = errors.size > 1 ? "Errors: \n* #{errors.join("\n* ")}" : "Error: #{errors.first}"
+  fail Vagrant::Errors::VagrantError.new, msg
+end
+
 Vagrant.configure(2) do |config|
 
   config.vm.define "ocptest" do |ocptest|
