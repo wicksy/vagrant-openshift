@@ -5,7 +5,7 @@
 PUBLIC_ADDRESS="192.168.10.10"
 
 # Number of virtualized CPUs
-VM_CPU = ENV['VM_CPU'] || 2
+VM_CPU = ENV['VM_CPU'] || 3
 
 # Amount of available RAM
 VM_MEMORY = ENV['VM_MEMORY'] || 3072
@@ -36,6 +36,9 @@ Vagrant.configure(2) do |config|
     ocptest.vm.network "private_network", ip: "#{PUBLIC_ADDRESS}"
     ocptest.vm.hostname = "ocptest.openshift.localdomain"
     ocptest.vm.boot_timeout = 600
+    ocptest.landrush.enabled = true
+    ocptest.landrush.tld = "openshift.localdomain"
+    ocptest.landrush.host_interface = "eth1"
   end
 
 end
