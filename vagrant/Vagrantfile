@@ -27,18 +27,30 @@ end
 Vagrant.configure(2) do |config|
 
   config.vm.define "ocptest" do |ocptest|
+
     ocptest.vm.provider "virtualbox" do |v|
       v.memory = VM_MEMORY
       v.cpus = VM_CPU
       v.gui = false
     end
+
     ocptest.vm.box = "centos/7"
     ocptest.vm.network "private_network", ip: "#{PUBLIC_ADDRESS}"
     ocptest.vm.hostname = "ocptest.openshift.localdomain"
     ocptest.vm.boot_timeout = 600
+    ocptest.vm.synced_folder "../ansible/", "/srv/ansible/", type: "rsync"
     ocptest.landrush.enabled = true
     ocptest.landrush.tld = "openshift.localdomain"
     ocptest.landrush.host_interface = "eth1"
+
+    ocptest.vm.provision :ansible_local do |ansible|
+      ansible.provisioning_path = "/srv/ansible/"
+      ansible.inventory_path = "/srv/ansible/hosts"
+      ansible.raw_arguments = "--verbose"
+      ansible.limit = "ocptest"
+      ansible.playbook = "/srv/ansible/site.yml"
+    end
+
   end
 
 end
