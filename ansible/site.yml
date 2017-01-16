@@ -1,0 +1,9 @@
+- hosts:
+    - ocptest
+  remote_user: vagrant
+  become: true
+  become_user: root
+  become_method: sudo
+
+  roles:
+    - openshift
