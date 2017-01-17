@@ -1,0 +1,13 @@
+---
+
+- name: Set timezone to UTC
+  command: timedatectl set-timezone UTC
+  when: ansible_date_time.tz != 'UTC'
+
+- name: Put /etc/hosts in place
+  copy:
+    src: ../files/etc.hosts
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644
