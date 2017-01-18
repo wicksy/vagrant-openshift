@@ -11,3 +11,9 @@
     owner: root
     group: root
     mode: 0644
+
+- name: Enable selinux
+  selinux:
+    policy: targeted
+    state: enforcing
+
