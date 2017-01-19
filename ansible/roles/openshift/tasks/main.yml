@@ -17,3 +17,25 @@
     policy: targeted
     state: enforcing
 
+- name: Epel Repo
+  package:
+    name: epel-release
+    state: latest
+
+- name: Pre-requisite packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - bash-completion
+    - bind-utils
+    - bridge-utils
+    - git
+    - iptables-services
+    - net-tools
+    - screen
+    - strace
+    - tcpdump
+    - wget
+
+
