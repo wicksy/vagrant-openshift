@@ -17,6 +17,15 @@
     policy: targeted
     state: enforcing
 
+- name: Disable fastestmirror plugin
+  ini_file:
+    dest: /etc/yum/pluginconf.d/fastestmirror.conf
+    section: main
+    option: enabled
+    value: 0
+    mode: 0644
+    backup: yes
+
 - name: Epel Repo
   package:
     name: epel-release
