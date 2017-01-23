@@ -39,16 +39,20 @@ Vagrant.configure(2) do |config|
     ocptest.vm.hostname = "ocptest.openshift.localdomain"
     ocptest.vm.boot_timeout = 600
     ocptest.vm.synced_folder "../ansible/", "/srv/ansible/", type: "rsync"
+    ocptest.ssh.insert_key = false
     ocptest.landrush.enabled = true
     ocptest.landrush.tld = "openshift.localdomain"
     ocptest.landrush.host_interface = "eth1"
 
     ocptest.vm.provision :ansible_local do |ansible|
+      ansible.version = "2.2.0.0"
+      ansible.install_mode = "pip"
       ansible.provisioning_path = "/srv/ansible/"
       ansible.inventory_path = "/srv/ansible/hosts"
       ansible.raw_arguments = "--verbose"
       ansible.limit = "ocptest"
       ansible.playbook = "/srv/ansible/site.yml"
+      ansible.verbose = true
     end
 
   end
