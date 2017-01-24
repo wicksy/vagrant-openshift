@@ -32,7 +32,7 @@
     mode: 0644
     backup: yes
 
-- name: Epel Repo
+- name: Install epel repository package
   package:
     name: epel-release
     state: latest
@@ -42,15 +42,24 @@
     name: "{{ item }}"
     state: latest
   with_items:
+    - ansible
     - bash-completion
     - bind-utils
     - bridge-utils
     - git
     - iptables-services
     - net-tools
+    - pyOpenSSL
     - screen
     - strace
     - tcpdump
     - wget
 
-
+- name: Disable epel repo
+  ini_file:
+    dest: /etc/yum.repos.d/epel.repo
+    section: epel
+    option: enabled
+    value: 0
+    mode: 0644
+    backup: no
