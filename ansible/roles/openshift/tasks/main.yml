@@ -37,6 +37,15 @@
     name: epel-release
     state: latest
 
+- name: Enable epel repo
+  ini_file:
+    dest: /etc/yum.repos.d/epel.repo
+    section: epel
+    option: enabled
+    value: 1
+    mode: 0644
+    backup: no
+
 - name: Pre-requisite packages
   package:
     name: "{{ item }}"
@@ -46,6 +55,7 @@
     - bash-completion
     - bind-utils
     - bridge-utils
+    - docker
     - git
     - iptables-services
     - net-tools
