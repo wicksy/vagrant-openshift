@@ -55,7 +55,7 @@
     - bash-completion
     - bind-utils
     - bridge-utils
-    - docker
+    - docker-latest
     - git
     - iptables-services
     - net-tools
