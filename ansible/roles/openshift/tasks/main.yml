@@ -73,3 +73,19 @@
     value: 0
     mode: 0644
     backup: no
+
+- name: Update docker options
+  lineinfile:
+    dest: /etc/sysconfig/docker-latest
+    backup: yes
+    create: no
+    state: present
+    regexp: '^OPTIONS='
+    line: OPTIONS='--selinux-enabled --log-driver=journald --insecure-registry 172.30.0.0/16'
+
+- name: Restart docker
+  service:
+    name: docker-latest
+    state: restarted
+    enabled: yes
+
