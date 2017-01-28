@@ -89,3 +89,21 @@
     state: restarted
     enabled: yes
 
+- name: Generate ssh-key for vagrant
+  user:
+    name: vagrant
+    state: present
+    shell: /bin/bash
+    home: /home/vagrant
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: ./.ssh/id_rsa
+
+- name: Add vagrant ssh key to authorized_keys
+  authorized_key:
+    user: vagrant
+    state: present
+    key: "{{ lookup('file', '/home/vagrant/.ssh/id_rsa.pub') }}"
+    path: /home/vagrant/.ssh/authorized_keys
+    manage_dir: yes
+
