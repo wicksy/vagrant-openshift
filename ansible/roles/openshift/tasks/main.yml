@@ -107,3 +107,12 @@
     path: /home/vagrant/.ssh/authorized_keys
     manage_dir: yes
 
+- name: Clone OpenShift Ansible git repo
+  git:
+    repo: https://github.com/openshift/openshift-ansible
+    dest: /home/vagrant/openshift-ansible
+    version: master
+    clone: yes
+    force: yes
+    update: yes
+
