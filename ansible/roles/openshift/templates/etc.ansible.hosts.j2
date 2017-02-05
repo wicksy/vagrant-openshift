@@ -1,0 +1,25 @@
+[OSEv3:children]
+masters
+nodes
+etcd
+
+[OSEv3:vars]
+ansible_ssh_user=vagrant
+ansible_become=true
+deployment_type=origin
+openshift_master_default_subdomain={{ ansible_domain }}
+os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
+openshift_master_cluster_method=native
+openshift_master_cluster_hostname={{ ansible_fqdn }}
+openshift_master_cluster_public_hostname={{ ansible_fqdn }}
+
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+
+[masters]
+{{ ansible_fqdn }} openshift_ip={{ ansible_ssh_host }} openshift_public_ip={{ ansible_ssh_host }}
+
+[etcd]
+{{ ansible_fqdn }} openshift_ip={{ ansible_ssh_host }} openshift_public_ip={{ ansible_ssh_host }}
+
+[nodes]
+{{ ansible_fqdn }} openshift_node_labels="{'region': 'infra', 'zone': 'default'}" openshift_schedulable=True openshift_ip={{ ansible_ssh_host }} openshift_public_ip={{ ansible_ssh_host }}
