@@ -116,3 +116,10 @@
     force: yes
     update: yes
 
+- name: Prepare /etc/ansible/hosts for byo playbook
+  template:
+    src: etc.ansible.hosts.j2
+    dest: /etc/ansible/hosts
+    owner: root
+    group: root
+    mode: 0644
