@@ -123,3 +123,12 @@
     owner: root
     group: root
     mode: 0644
+
+- name: Setup ssh config
+  template:
+    src: vagrant.ssh.config.j2
+    dest: /home/vagrant/.ssh/config
+    owner: vagrant
+    group: vagrant
+    mode: 0600
+
