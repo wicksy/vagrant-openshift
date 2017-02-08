@@ -55,7 +55,7 @@
     - bash-completion
     - bind-utils
     - bridge-utils
-    - docker-latest
+    - docker
     - git
     - iptables-services
     - net-tools
@@ -76,16 +76,16 @@
 
 - name: Update docker options
   lineinfile:
-    dest: /etc/sysconfig/docker-latest
+    dest: /etc/sysconfig/docker
     backup: yes
     create: no
     state: present
     regexp: '^OPTIONS='
-    line: OPTIONS='--selinux-enabled --log-driver=journald --insecure-registry 172.30.0.0/16'
+    line: OPTIONS=' --selinux-enabled --log-driver=json-file --log-opt max-size=50m --insecure-registry 172.30.0.0/16'
 
 - name: Restart docker
   service:
-    name: docker-latest
+    name: docker
     state: restarted
     enabled: yes
 
@@ -115,6 +115,13 @@
     clone: yes
     force: yes
     update: yes
+
+- name: Change owner/group on git repo
+  file:
+    path: /home/vagrant/openshift-ansible
+    owner: vagrant
+    group: vagrant
+    recurse: yes
 
 - name: Prepare /etc/ansible/hosts for byo playbook
   template:
