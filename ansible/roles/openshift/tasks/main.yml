@@ -51,7 +51,6 @@
     name: "{{ item }}"
     state: latest
   with_items:
-    - ansible
     - bash-completion
     - bind-utils
     - bridge-utils
@@ -122,6 +121,14 @@
     owner: vagrant
     group: vagrant
     recurse: yes
+
+- name: Make /etc/ansible
+  file:
+    path: /etc/ansible
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
 
 - name: Prepare /etc/ansible/hosts for byo playbook
   template:
