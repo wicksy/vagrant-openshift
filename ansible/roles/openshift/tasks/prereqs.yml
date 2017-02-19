@@ -1,0 +1,147 @@
+---
+
+- name: Disable firewalld
+  service:
+    name: firewalld
+    state: stopped
+    enabled: no
+
+- name: Set timezone to UTC
+  command: timedatectl set-timezone UTC
+  when: ansible_date_time.tz != 'UTC'
+
+- name: Put /etc/hosts in place
+  copy:
+    src: ../files/etc.hosts
+    dest: /etc/hosts
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable selinux
+  selinux:
+    policy: targeted
+    state: enforcing
+
+- name: Disable fastestmirror plugin
+  ini_file:
+    dest: /etc/yum/pluginconf.d/fastestmirror.conf
+    section: main
+    option: enabled
+    value: 0
+    mode: 0644
+    backup: yes
+
+- name: Install epel repository package
+  package:
+    name: epel-release
+    state: latest
+
+- name: Enable epel repo
+  ini_file:
+    dest: /etc/yum.repos.d/epel.repo
+    section: epel
+    option: enabled
+    value: 1
+    mode: 0644
+    backup: no
+
+- name: Pre-requisite packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - bash-completion
+    - bind-utils
+    - bridge-utils
+    - docker
+    - git
+    - iptables-services
+    - net-tools
+    - pyOpenSSL
+    - screen
+    - strace
+    - tcpdump
+    - wget
+
+- name: Disable epel repo
+  ini_file:
+    dest: /etc/yum.repos.d/epel.repo
+    section: epel
+    option: enabled
+    value: 0
+    mode: 0644
+    backup: no
+
+- name: Update docker options
+  lineinfile:
+    dest: /etc/sysconfig/docker
+    backup: yes
+    create: no
+    state: present
+    regexp: '^OPTIONS='
+    line: OPTIONS=' --selinux-enabled --log-driver=json-file --log-opt max-size=50m --insecure-registry 172.30.0.0/16'
+
+- name: Restart docker
+  service:
+    name: docker
+    state: restarted
+    enabled: yes
+
+- name: Generate ssh-key for vagrant
+  user:
+    name: vagrant
+    state: present
+    shell: /bin/bash
+    home: /home/vagrant
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: ./.ssh/id_rsa
+
+- name: Add vagrant ssh key to authorized_keys
+  authorized_key:
+    user: vagrant
+    state: present
+    key: "{{ lookup('file', '/home/vagrant/.ssh/id_rsa.pub') }}"
+    path: /home/vagrant/.ssh/authorized_keys
+    manage_dir: yes
+
+- name: Clone OpenShift Ansible git repo
+  git:
+    repo: https://github.com/openshift/openshift-ansible
+    dest: /home/vagrant/openshift-ansible
+    version: master
+    clone: yes
+    force: yes
+    update: yes
+
+- name: Change owner/group on git repo
+  file:
+    path: /home/vagrant/openshift-ansible
+    owner: vagrant
+    group: vagrant
+    recurse: yes
+
+- name: Make /etc/ansible
+  file:
+    path: /etc/ansible
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Prepare /etc/ansible/hosts for byo playbook
+  template:
+    src: etc.ansible.hosts.j2
+    dest: /etc/ansible/hosts
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Setup ssh config
+  template:
+    src: vagrant.ssh.config.j2
+    dest: /home/vagrant/.ssh/config
+    owner: vagrant
+    group: vagrant
+    mode: 0600
