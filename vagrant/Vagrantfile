@@ -5,7 +5,7 @@
 PUBLIC_ADDRESS="192.168.10.10"
 
 # Number of virtualized CPUs
-VM_CPU = ENV['VM_CPU'] || 3
+VM_CPU = ENV['VM_CPU'] || 2
 
 # Amount of available RAM
 VM_MEMORY = ENV['VM_MEMORY'] || 3072
