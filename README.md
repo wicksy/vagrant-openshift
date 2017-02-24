@@ -16,6 +16,13 @@ Notes during installation/development:
 
 This installation requires Vagrant (plus the Landrush plugin), Virtualbox and Ansible.
 
+```
+$ vagrant up ocptest
+Vagrant failed to initialize at a very early stage:
+Error: landrush plugin is not installed, run `vagrant plugin install landrush` to install it.
+$
+```
+
 #### Software Versions
 
 Deployment has been successfully tested with:
