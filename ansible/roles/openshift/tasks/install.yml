@@ -1,5 +1,11 @@
 ---
 
+- name: OpenShift installed already?
+  command: oc login -u system:admin
+  ignore_errors: True
+  register: oc_login
+
 - name: Run OpenShift installation playbook
   shell: ansible-playbook /home/vagrant/openshift-ansible/playbooks/byo/config.yml > /tmp/ansible.byo.out 2>&1
   become: false
+  when: oc_login.rc != 0
