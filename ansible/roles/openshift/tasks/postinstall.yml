@@ -1,0 +1,10 @@
+---
+
+- name: Add developer user to htpasswd
+  htpasswd:
+    path: /etc/origin/master/htpasswd
+    name: "{{ developer_user }}"
+    password: "{{ developer_password }}"
+    owner: root
+    group: root
+    mode: 0600
