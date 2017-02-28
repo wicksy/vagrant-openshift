@@ -5,3 +5,6 @@
 
 - name: Run main OpenShift Ansible installation playbook
   include: install.yml
+
+- name: Post installation bespoking
+  include: postinstall.yml
