@@ -48,6 +48,43 @@ Once the VM has been started and provisioned, the OpenShift Master Console shoul
 
 https://ocptest.openshift.localdomain:8443
 
+#### Command Line Login
+
+The installation comes with a `developer` user (password `developer` set in `defaults/main.yml`) as well as the `system:admin` user (which has cluster admin rights
+through the cluster-admin role):
+
+```
+[vagrant@ocptest ~]$ oc login -u developer
+Authentication required for https://ocptest.openshift.localdomain:8443 (openshift)
+Username: developer
+Password:
+Login successful.
+
+You don't have any projects. You can try to create a new project, by running
+
+    oc new-project <projectname>
+
+[vagrant@ocptest ~]$ oc whoami
+developer
+[vagrant@ocptest ~]$ oc logout
+Logged "developer" out on "https://ocptest.openshift.localdomain:8443"
+[vagrant@ocptest ~]$ oc login -u system:admin
+Logged into "https://ocptest.openshift.localdomain:8443" as "system:admin" using existing credentials.
+
+You have access to the following projects and can switch between them with 'oc project <projectname>':
+
+    bestefforts
+  * default
+    kube-system
+    logging
+    management-infra
+    openshift
+    openshift-infra
+
+Using project "default".
+[vagrant@ocptest ~]$
+```
+
 #### Teardown Instructions
 
 ```
