@@ -57,7 +57,9 @@
     - docker
     - git
     - iptables-services
+    - libnfsidmap
     - net-tools
+    - nfs-utils
     - pyOpenSSL
     - screen
     - strace
