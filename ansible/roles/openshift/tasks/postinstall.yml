@@ -8,3 +8,33 @@
     owner: root
     group: root
     mode: 0600
+
+- name: Start NFS server services
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - rpcbind
+    - nfs-server
+    - rpc-statd
+    - nfs-idmapd
+
+- name: Make root directory for NFS share
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  with_items:
+    - "{{ nfs_root | default('/nfsshare') }}"
+
+- name: Make directories for each persistent volume
+  file:
+    path: "{{ nfs_root | default('/nfsshare') }}/{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0777
+  with_sequence: start=1 end="{{ persistent_volumes | default(3) }}" format=pv%04x
