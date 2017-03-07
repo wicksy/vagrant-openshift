@@ -38,3 +38,13 @@
     group: root
     mode: 0777
   with_sequence: start=1 end="{{ persistent_volumes | default(3) }}" format=pv%04x
+
+- name: Put /etc/exports in place
+  template:
+    src: etc.exports.j2
+    dest: /etc/exports
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - reexport directories
