@@ -1,1 +1,1 @@
-{{ nfs_root }} {{ ansible_ssh_host }}(rw,sync,no_root_squash)
+{{ nfs_root | default('/nfsshare') }} {{ ansible_ssh_host }}(rw,sync,no_root_squash)
