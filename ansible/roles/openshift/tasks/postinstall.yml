@@ -37,7 +37,7 @@
     owner: root
     group: root
     mode: 0777
-  with_sequence: start=1 end="{{ persistent_volumes | default(3) }}" format=pv%04x
+  with_sequence: start=1 end="{{ persistent_volumes | default(3) }}" format=pv%04d
 
 - name: Put /etc/exports in place
   template:
@@ -48,3 +48,11 @@
     mode: 0644
   notify:
     - reexport directories
+
+- name: Login as cluster admin
+  command: oc login -u system:admin
+  changed_when: False
+
+- name: Make persistent volumes
+  include: create_pv.yml pv_name="{{ item }}"
+  with_sequence: start=1 end="{{ persistent_volumes | default(3) }}" format=pv%04d
