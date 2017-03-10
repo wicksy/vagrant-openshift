@@ -85,6 +85,26 @@ Using project "default".
 [vagrant@ocptest ~]$
 ```
 
+#### Persistent Volumes
+NFS server is installed and setup to manage persistent volumes. By default 5 volumes are created but this
+can be increased through the `persistent_volumes` variable.
+
+```
+[vagrant@ocptest ~]$ sudo oc get pv
+NAME      CAPACITY   ACCESSMODES   RECLAIMPOLICY   STATUS      CLAIM     REASON    AGE
+pv0001    2Gi        RWO           Recycle         Available                       3m
+pv0002    2Gi        RWO           Recycle         Available                       2m
+pv0003    2Gi        RWO           Recycle         Available                       2m
+pv0004    2Gi        RWO           Recycle         Available                       2m
+pv0005    2Gi        RWO           Recycle         Available                       2m
+[vagrant@ocptest ~]$ oc create -f ./pvc.yaml
+persistentvolumeclaim "nfs-claim1" created
+[vagrant@ocptest ~]$ oc get pvc
+NAME         STATUS    VOLUME    CAPACITY   ACCESSMODES   AGE
+nfs-claim1   Bound     pv0005    2Gi        RWO           2s
+[vagrant@ocptest ~]$
+```
+
 #### Teardown Instructions
 
 ```
