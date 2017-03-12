@@ -115,10 +115,9 @@ $ vagrant destroy ocptest --force
 
 Plans for additional content include using:
 
-- Install specific versions of OpenShift
 - Unit tests (using [**testinfra**](https://github.com/philpep/testinfra))
+- Install specific versions of OpenShift
 - Travis Builds
-- NFS server to provide persistent storage (PV/PVC)
 - Aggregated Logging (EFK)
 - POD metrics (Hawkular/Cassandra)
 - Permanent storage for docker-registry
