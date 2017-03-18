@@ -2,6 +2,8 @@
 
 - name: OpenShift installed already?
   command: oc login -u system:admin
+  failed_when: False
+  changed_when: False
   ignore_errors: True
   register: oc_login
 
