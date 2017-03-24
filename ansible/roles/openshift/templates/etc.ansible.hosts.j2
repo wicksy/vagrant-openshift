@@ -7,7 +7,7 @@ etcd
 ansible_ssh_user=vagrant
 ansible_become=true
 deployment_type=origin
-openshift_master_default_subdomain={{ ansible_domain }}
+openshift_master_default_subdomain={{ ansible_fqdn }}
 os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 openshift_master_cluster_method=native
 openshift_master_cluster_hostname={{ ansible_fqdn }}
