@@ -121,7 +121,7 @@
   git:
     repo: https://github.com/openshift/openshift-ansible
     dest: /home/vagrant/openshift-ansible
-    version: master
+    version: "{{ openshift_ansible_version | default('master') }}"
     clone: yes
     force: yes
     update: yes
