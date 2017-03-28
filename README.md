@@ -50,9 +50,13 @@ The following Ansible variables can be used to override supplied values:
 
 ```
 developer_user: The user created and designed to be used as a developer account (default "developer")
+
 developer_password: Password for the developer user (default "developer")
+
 nfs_root: The root directory where NFS persistent volumes are located (default "/nfsshare")
+
 persistent_volumes: Number of persistent volumes created (default "5")
+
 openshift_ansible_version: The version of the ansible/openshift-ansible repository to checkout (default "openshift-ansible-3.5.28-1")
 ```
 
