@@ -1,4 +1,9 @@
+[![license](https://img.shields.io/badge/License-MIT-blue.svg?maxAge=2592000)](https://github.com/wicksy/vagrant-openshift/blob/master/LICENSE.md)</br>
+
 ### Vagrant managed VM running Red Hat OpenShift Container Platform (OCP)
+
+![Vagrant logo](logos/vagrant.png "Vagrant")
+![Openshift logo](logos/openshift.png "Openshift")
 
 #### About
 
