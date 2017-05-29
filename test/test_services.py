@@ -5,6 +5,8 @@ import pytest
   ("firewalld", "disabled", "stopped"),
   ("nfs-idmapd", "enabled", "running"),
   ("nfs-server", "enabled", "running"),
+  ("origin-master", "enabled", "running"),
+  ("origin-node", "enabled", "running"),
   ("rpc-statd", "enabled", "running"),
   ("rpcbind", "enabled", "running"),
 ])
