@@ -18,5 +18,6 @@ import pytest
   ("wget"),
 ])
 
-def test_packages(Package, name):
-  assert Package(name).is_installed
+def test_packages(host, name):
+  pkg = host.package(name)
+  assert pkg.is_installed
