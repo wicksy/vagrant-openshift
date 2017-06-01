@@ -149,30 +149,24 @@ $ ./runtests.sh
 The script will bring up the vagrant machine if not already, setup a python virtual environment, install required pips, run a series of test
 packs through testinfra then clean up afterwards.
 
-Sample output from one of the test packs (for packages):
+Sample output from one of the test packs (for services):
 
 ```
 ========================================================= test session starts ==================================================================
 platform darwin -- Python 2.7.10, pytest-3.1.0, py-1.4.33, pluggy-0.4.0 -- /Users/wicksy/.pyenvironments/ocptest/bin/python
 cachedir: ../.cache
 rootdir: /Users/wicksy/git/wicksy/vagrant-openshift, inifile:
-plugins: testinfra-1.6.2
-collected 24 items
+plugins: testinfra-1.6.3
+collected 8 items
 
-../test/test_packages.py::test_packages[paramiko:/ocptest-bash-completion] PASSED
-../test/test_packages.py::test_packages[paramiko:/ocptest-bind-utils] PASSED
-../test/test_packages.py::test_packages[paramiko:/ocptest-bridge-utils] PASSED
-../test/test_packages.py::test_packages[paramiko:/ocptest-docker] PASSED
-../test/test_packages.py::test_packages[paramiko:/ocptest-epel-release] PASSED
-../test/test_packages.py::test_packages[paramiko:/ocptest-git] PASSED
-../test/test_packages.py::test_packages[paramiko:/ocptest-nfs-utils] PASSED
 ../test/test_services.py::test_services[paramiko:/ocptest-docker-enabled-running] PASSED
 ../test/test_services.py::test_services[paramiko:/ocptest-firewalld-disabled-stopped] PASSED
 ../test/test_services.py::test_services[paramiko:/ocptest-nfs-idmapd-enabled-running] PASSED
 ../test/test_services.py::test_services[paramiko:/ocptest-nfs-server-enabled-running] PASSED
+../test/test_services.py::test_services[paramiko:/ocptest-origin-master-enabled-running] PASSED
+../test/test_services.py::test_services[paramiko:/ocptest-origin-node-enabled-running] PASSED
 ../test/test_services.py::test_services[paramiko:/ocptest-rpc-statd-enabled-running] PASSED
 ../test/test_services.py::test_services[paramiko:/ocptest-rpcbind-enabled-running] PASSED
-../test/test_files.py::test_files[paramiko:/ocptest-/etc/hosts-root-root-0644-ocptest] PASSED
 
 ======================================================== pytest-warning summary ================================================================
 ```
@@ -189,7 +183,6 @@ $ vagrant destroy ocptest --force
 
 Plans for additional content include using:
 
-- Unit tests (using [**testinfra**](https://github.com/philpep/testinfra))
 - Permanent storage for docker-registry
 - Travis Builds
 - Install specific versions of OpenShift
