@@ -16,7 +16,7 @@ Notes during installation/development:
 * Used Vagrant 1.8.5 as Landrush doesn't work with 1.9.x. (https://github.com/vagrant-landrush/landrush/issues/292)
 * Used Ansible 2.2.0.0 as OpenShift installation fails with 2.2.1.0 (https://github.com/openshift/openshift-ansible/issues/3111)
 * New ssh key not inserted due to issue (https://github.com/mitchellh/vagrant/issues/7642)
-* Tag openshift-ansible-3.5.28-1 used to clone openshift/openshift-ansible due to issue (https://github.com/openshift/openshift-ansible/issues/3705)
+* Tag openshift-ansible-3.5.67-1 used to clone openshift/openshift-ansible due to issues open against `master`
 
 #### Pre-requisites
 
@@ -38,7 +38,7 @@ Deployment has been successfully tested with:
 * Vagrant 1.8.5
 * Vagrant Landrush plugin 1.2.0
 * Ansible 2.2.0.0
-* Ansible/OpenShift-Ansible Repository Release openshift-ansible-3.5.28-1
+* Ansible/OpenShift-Ansible Repository Release openshift-ansible-3.5.67-1
 * OpenShift Origin v1.4.1 (kubernetes v1.4.0+776c994)
 
 #### Deployment Instructions
@@ -62,7 +62,9 @@ nfs_root: The root directory where NFS persistent volumes are located (default "
 
 persistent_volumes: Number of persistent volumes created (default "5")
 
-openshift_ansible_version: The version of the ansible/openshift-ansible repository to checkout (default "openshift-ansible-3.5.28-1")
+openshift_ansible_version: The version of the ansible/openshift-ansible repository to checkout (default "master")
+
+install_disable_check: The resource checks to disable during installation (default "disk_availability,memory_availability")
 ```
 
 The `openshift_ansible_version` can be used to check out an older version of the repository in the event of unresolved issues and problems with the
