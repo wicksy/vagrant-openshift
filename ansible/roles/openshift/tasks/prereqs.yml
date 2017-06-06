@@ -57,6 +57,7 @@
     - docker
     - git
     - iptables-services
+    - java-1.8.0-openjdk-headless
     - libnfsidmap
     - net-tools
     - nfs-utils
