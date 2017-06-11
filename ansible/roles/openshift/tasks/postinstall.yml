@@ -56,3 +56,9 @@
 - name: Make persistent volumes
   include: create_pv.yml pv_name="{{ item }}"
   with_sequence: start=1 end="{{ persistent_volumes | default(3) }}" format=pv%04d
+
+- name: Restart Master if logging deployed
+  service:
+    name: origin-master
+    state: restarted
+  when: deploy_logging
