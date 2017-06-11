@@ -2,3 +2,4 @@ developer_user: developer
 developer_password: developer
 nfs_root: /nfsshare
 persistent_volumes: 5
+deploy_logging: false
