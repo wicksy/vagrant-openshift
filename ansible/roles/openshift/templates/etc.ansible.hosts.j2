@@ -13,8 +13,8 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 openshift_master_cluster_method=native
 openshift_master_cluster_hostname={{ ansible_fqdn }}
 openshift_master_cluster_public_hostname={{ ansible_fqdn }}
-
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+openshift_hosted_logging_deploy={{ deploy_logging | default('false') }}
 
 [masters]
 {{ ansible_fqdn }} openshift_ip={{ ansible_eth0.ipv4.address }} openshift_public_ip={{ ansible_ssh_host }}
