@@ -65,6 +65,8 @@ persistent_volumes: Number of persistent volumes created (default "5")
 openshift_ansible_version: The version of the ansible/openshift-ansible repository to checkout (default "master")
 
 install_disable_check: The resource checks to disable during installation (default "disk_availability,memory_availability")
+
+deploy_logging: Whether to deploy aggregated logging (EFK stack) (default "false")
 ```
 
 The `openshift_ansible_version` can be used to check out an older version of the repository in the event of unresolved issues and problems with the
@@ -75,6 +77,15 @@ latest release (see Installation Notes above).
 Once the VM has been started and provisioned, the OpenShift Master Console should be available at:
 
 https://ocptest.localdomain:8443
+
+#### Aggregated Logging
+
+If `deploy_logging` is set to `true` archived pod logs will be available from the console (Pod view -> Logs tab) through a Kibana interface.
+
+<b>NOTE:</b> Persistent storage for Elasticsearch is not currently supported here as the repository is designed to provide a small development rig
+where data should generally be throw away (much like an `oc cluster up` environment).
+
+Persistent logging can be configured by further bespoking `templates/etc.ansible.hosts.j2` and supplying some of the `openshift_hosted_logging_storage_` variables.
 
 #### Command Line Login
 
@@ -188,5 +199,4 @@ Plans for additional content include using:
 - Permanent storage for docker-registry
 - Travis Builds
 - Install specific versions of OpenShift
-- Aggregated Logging (EFK)
 - POD metrics (Hawkular/Cassandra)
