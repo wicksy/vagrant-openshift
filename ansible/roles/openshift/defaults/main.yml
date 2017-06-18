@@ -3,3 +3,4 @@ developer_password: developer
 nfs_root: /nfsshare
 persistent_volumes: 5
 deploy_logging: false
+deploy_metrics: false
