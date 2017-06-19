@@ -67,6 +67,8 @@ openshift_ansible_version: The version of the ansible/openshift-ansible reposito
 install_disable_check: The resource checks to disable during installation (default "disk_availability,memory_availability")
 
 deploy_logging: Whether to deploy aggregated logging (EFK stack) (default "false")
+
+deploy_metrics: Whether to deploy pod metrics collection (Cassandra/Hawkular) (default "false")
 ```
 
 The `openshift_ansible_version` can be used to check out an older version of the repository in the event of unresolved issues and problems with the
@@ -86,6 +88,21 @@ If `deploy_logging` is set to `true` archived pod logs will be available from th
 where data should generally be throw away (much like an `oc cluster up` environment).
 
 Persistent logging can be configured by further bespoking `templates/etc.ansible.hosts.j2` and supplying some of the `openshift_hosted_logging_storage_` variables.
+
+#### Pod Metrics
+
+If `deploy_logging` is set to `true` pod metrics will be available from the console (Pod view -> Metrics tab).
+
+<b>NOTE:</b> As with Logging, persistent storage is not supported here but can be configured by modifying the hosts template with the appropriate
+`openshift_hosted_metrics_storage_` variables.
+
+#### Memory
+
+When deploying Logging <b>AND</b> Metrics it is advisable to increase the memory on the VM:
+
+```
+$ VM_MEMORY=8192 vagrant up ocptest
+```
 
 #### Command Line Login
 
@@ -199,4 +216,3 @@ Plans for additional content include using:
 - Permanent storage for docker-registry
 - Travis Builds
 - Install specific versions of OpenShift
-- POD metrics (Hawkular/Cassandra)
