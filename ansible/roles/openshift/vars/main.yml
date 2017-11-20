@@ -1,2 +1,2 @@
-#openshift_ansible_version: openshift-ansible-3.5.28-1
-openshift_ansible_version: openshift-ansible-3.5.67-1
+openshift_ansible_version: release-3.6
+install_disable_check: disk_availability,memory_availability,docker_storage,docker_image_availability
