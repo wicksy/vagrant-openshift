@@ -14,6 +14,7 @@ openshift_master_cluster_method=native
 openshift_master_cluster_hostname={{ ansible_fqdn }}
 openshift_master_cluster_public_hostname={{ ansible_fqdn }}
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/master/htpasswd'}]
+openshift_docker_options="--insecure-registry=172.30.0.0/16 --log-driver=json-file --log-opt max-size=50M --log-opt max-file=3"
 openshift_hosted_logging_deploy={{ deploy_logging | default('false') }}
 openshift_hosted_metrics_deploy={{ deploy_metrics | default('false') }}
 
