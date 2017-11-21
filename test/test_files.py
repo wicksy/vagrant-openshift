@@ -2,7 +2,7 @@ import pytest
 
 @pytest.mark.parametrize("name, user, group, mode, contains", [
   ("/etc/hosts","root","root","0644","ocptest"),
-  ("/etc/sysconfig/docker","root","root","0644","OPTIONS=' --selinux-enabled --log-driver=json-file --log-opt max-size=50m --insecure-registry 172.30.0.0/16'"),
+  ("/etc/sysconfig/docker","root","root","0644","OPTIONS=' --selinux-enabled  --insecure-registry=172.30.0.0/16 --log-driver=json-file --log-opt max-size=50M --log-opt max-file=3'"),
   ("/home/vagrant/openshift-ansible","vagrant","vagrant","0755","null"),
   ("/etc/ansible","root","root","0755","null"),
   ("/home/vagrant/.ssh/config","vagrant","vagrant","0600","User vagrant"),
