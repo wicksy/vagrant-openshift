@@ -83,23 +83,6 @@
     mode: 0644
     backup: no
 
-- name: Update docker options
-  lineinfile:
-    dest: /etc/sysconfig/docker
-    backup: yes
-    create: no
-    state: present
-    regexp: '^OPTIONS='
-    line: OPTIONS=' --selinux-enabled --log-driver=json-file --log-opt max-size=50m --insecure-registry 172.30.0.0/16'
-  register: sysconfig_docker
-
-- name: Restart docker
-  service:
-    name: docker
-    state: restarted
-    enabled: yes
-  when: sysconfig_docker.changed
-
 - name: Generate ssh-key for vagrant
   user:
     name: vagrant
