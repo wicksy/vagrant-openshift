@@ -13,10 +13,7 @@ Single node OCP Master designed to be used to develop/test locally (based on Ori
 
 Notes during installation/development:
 
-* Used Vagrant 1.8.5 as Landrush doesn't work with 1.9.x. (https://github.com/vagrant-landrush/landrush/issues/292)
-* Used Ansible 2.2.0.0 as OpenShift installation fails with 2.2.1.0 (https://github.com/openshift/openshift-ansible/issues/3111)
-* New ssh key not inserted due to issue (https://github.com/mitchellh/vagrant/issues/7642)
-* Tag openshift-ansible-3.5.67-1 used to clone openshift/openshift-ansible due to issues open against `master`
+* None currently
 
 #### Pre-requisites
 
@@ -34,12 +31,16 @@ $
 Deployment has been successfully tested with:
 
 * OSX 10.10.5
-* Virtualbox 5.0.12 r104815
-* Vagrant 1.8.5
+* Virtualbox 5.2.0 r118431
+* Vagrant 2.0.1
 * Vagrant Landrush plugin 1.2.0
-* Ansible 2.2.0.0
-* Ansible/OpenShift-Ansible Repository Release openshift-ansible-3.5.67-1
-* OpenShift Origin v1.4.1 (kubernetes v1.4.0+776c994)
+* Ansible 2.4.1.0
+* Ansible/OpenShift-Ansible Repository Release `release-3.6`
+* OpenShift Origin v3.6.1+008f2d5 (kubernetes v1.6.1+5115d708d7)
+
+This repository has previously been used to provision older versions of Origin with older
+versions of Virtualbox/Vagrant/Ansible so previous commits could be used if older Origin
+versions cannot be used with the latest.
 
 #### Deployment Instructions
 
@@ -71,8 +72,8 @@ deploy_logging: Whether to deploy aggregated logging (EFK stack) (default "false
 deploy_metrics: Whether to deploy pod metrics collection (Cassandra/Hawkular) (default "false")
 ```
 
-The `openshift_ansible_version` can be used to check out an older version of the repository in the event of unresolved issues and problems with the
-latest release (see Installation Notes above).
+The `openshift_ansible_version` can be used to check out an older version of the repository in the event of unresolved issues and problems with
+the latest release (or any release).
 
 #### OpenShift Web Console
 
