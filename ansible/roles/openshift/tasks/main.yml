@@ -1,10 +1,15 @@
 ---
 
-- name: Setup installation pre-requisites
-  include: prereqs.yml
+- block:
 
-- name: Run main OpenShift Ansible installation playbook
-  include: install.yml
+  - name: Setup installation pre-requisites
+    include: prereqs.yml
 
-- name: Post installation bespoking
-  include: postinstall.yml
+  - name: Run main OpenShift Ansible installation playbook
+    include: install.yml
+
+  - name: Post installation bespoking
+    include: postinstall.yml
+
+  environment:
+    PATH: "{{ ansible_env.PATH }}:/usr/local/bin/"
