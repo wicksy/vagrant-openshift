@@ -62,3 +62,21 @@
     name: origin-master
     state: restarted
   when: deploy_logging
+
+- name: Bash completions - Create
+  shell: "/usr/local/bin/{{ item }} completion bash > /etc/bash_completion.d/{{ item }} 2>/dev/null"
+  with_items:
+    - oc
+    - oadm
+    - openshift
+
+- name: Bash completions - Perms etc
+  file:
+    path: "/etc/bash_completion.d/{{ item }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+    - oc
+    - oadm
+    - openshift
