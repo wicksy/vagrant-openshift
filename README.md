@@ -35,8 +35,8 @@ Deployment has been successfully tested with:
 * Vagrant 2.0.1
 * Vagrant Landrush plugin 1.2.0
 * Ansible 2.4.1.0
-* Ansible/OpenShift-Ansible Repository Release `release-3.6`
-* OpenShift Origin v3.6.1+008f2d5 (kubernetes v1.6.1+5115d708d7)
+* Ansible/OpenShift-Ansible Repository Release `release-3.7`
+* OpenShift Origin v3.7.0+7ed6862 (kubernetes v1.7.6+a08f5eeb62)
 
 This repository has previously been used to provision older versions of Origin with older
 versions of Virtualbox/Vagrant/Ansible so previous commits could be used if older Origin
@@ -70,6 +70,10 @@ install_disable_check: The resource checks to disable during installation (defau
 deploy_logging: Whether to deploy aggregated logging (EFK stack) (default "false")
 
 deploy_metrics: Whether to deploy pod metrics collection (Cassandra/Hawkular) (default "false")
+
+install_containerized: Whether to run containerized OpenShift Origin services (default "true")
+
+openshift_release: What version of OpenShift Origin (containers) to use (default "3.7.0")
 ```
 
 The `openshift_ansible_version` can be used to check out an older version of the repository in the event of unresolved issues and problems with
@@ -92,7 +96,7 @@ Persistent logging can be configured by further bespoking `templates/etc.ansible
 
 #### Pod Metrics
 
-If `deploy_logging` is set to `true` pod metrics will be available from the console (Pod view -> Metrics tab).
+If `deploy_metrics` is set to `true` pod metrics will be available from the console (Pod view -> Metrics tab).
 
 <b>NOTE:</b> As with Logging, persistent storage is not supported here but can be configured by modifying the hosts template with the appropriate
 `openshift_hosted_metrics_storage_` variables.
@@ -216,4 +220,3 @@ Plans for additional content include using:
 
 - Permanent storage for docker-registry
 - Travis Builds
-- Install specific versions of OpenShift
