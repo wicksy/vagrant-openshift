@@ -1,0 +1,9 @@
+!/bin/bash
+#
+# Replace nameserver added by Origin configuration which will choose the eth0 IP which
+# is in fact being handled by Landrush and not by dnsmasq so any cluster.local service
+# fails to resolve which breaks basically everything. Therefore we use the IP defined
+# for the hostname on the assumption it's the private network added by Vagrant and
+# therefore will resolve via dnsmasq.
+#
+/bin/sed -i -e 's/^nameserver.*/nameserver {{ ansible_ssh_host }}/g' /etc/resolv.conf
