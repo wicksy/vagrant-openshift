@@ -80,3 +80,13 @@
     - oc
     - oadm
     - openshift
+
+- name: Template out resolver script
+  template:
+    src: 99-origin-update-dns.sh.j2
+    dest: /etc/NetworkManager/dispatcher.d/99-origin-update-dns.sh
+    owner: root
+    group: root
+    mode: 0755
+  notify:
+    - restart NetworkManager
