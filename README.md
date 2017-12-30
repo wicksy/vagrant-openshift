@@ -13,7 +13,30 @@ Single node OCP Master designed to be used to develop/test locally (based on Ori
 
 Notes during installation/development:
 
-* None currently
+* https://github.com/openshift/openshift-ansible/issues/6435 still open at time of writing so `ansible_service_broker_image_prefix='ansibleplaybookbundle/origin-'` added to hosts file
+
+#### Outstanding Issues
+
+Due to the way that Vagrant 2.x appears to incorrectly sort interfaces and map them to `adapters`, the current `Vagrantfile` breaks once OpenShift Origin has been installed and
+configured. This introduces several extra interfaces (e.g. docker0, tun0, br0, etc) which seems to break the sorting algorithm:
+
+```
+DEBUG network_interfaces: Unsorted list: ["eth0", "eth1", "docker0", "ovs-system", "vxlan_sys_4789", "tun0", "br0", "", "tun0", "br0", "eth0", "eth1", "lo", "docker0"]
+DEBUG network_interfaces: Sorted list: ["", "eth1", "docker0", "eth0", "vxlan_sys_4789", "tun0", "br0"]
+DEBUG network_interfaces: Ethernet preferred sorted list: ["eth1", "eth0", "", "docker0", "vxlan_sys_4789", "tun0", "br0"]
+```
+
+The result of this is that `eth1` is passed back to Vagrant as `adapter 1` which is then configured incorrectly as a private network (host-only) interface rather than the
+NAT interface it should be. This causes `vagrant up` to hang indefinitely.
+
+To work around this you should bring up the initial box without provisioning it so that the network interface scripts can be correctly setup (before Origin is installed), then update
+the `Vagrantfile` to stop automatically configuring `adapter 2` and then provision the box so that Origin is installed and configured.
+
+```
+$ vagrant up ocptest --no-provision
+$ sed -i -e 's/ocptest.vm.network "private_network", adapter: 2.*/&, auto_config: false/g'  Vagrantfile
+$ vagrant provision ocptest
+```
 
 #### Pre-requisites
 
@@ -31,7 +54,7 @@ $
 Deployment has been successfully tested with:
 
 * OSX 10.10.5
-* Virtualbox 5.2.0 r118431
+* Virtualbox 5.2.4 r119785
 * Vagrant 2.0.1
 * Vagrant Landrush plugin 1.2.0
 * Ansible 2.4.1.0
@@ -43,6 +66,8 @@ versions of Virtualbox/Vagrant/Ansible so previous commits could be used if olde
 versions cannot be used with the latest.
 
 #### Deployment Instructions
+
+See <b>Outstanding Issues</b> above for any deployment instruction updates. If none are present the VM can be provisioned with:
 
 ```
 $ git clone https://github.com/wicksy/vagrant-openshift
