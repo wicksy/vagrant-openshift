@@ -35,7 +35,8 @@ Vagrant.configure(2) do |config|
     end
 
     ocptest.vm.box = "centos/7"
-    ocptest.vm.network "private_network", ip: "#{PUBLIC_ADDRESS}"
+    ocptest.vm.network "forwarded_port", adapter: 1, guest: 22, host: 12222, id: "ssh"
+    ocptest.vm.network "private_network", adapter: 2, ip: "#{PUBLIC_ADDRESS}"
     ocptest.vm.hostname = "ocptest.localdomain"
     ocptest.vm.boot_timeout = 600
     ocptest.vm.synced_folder "../ansible/", "/srv/ansible/", type: "rsync"
