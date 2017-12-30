@@ -7,7 +7,6 @@
 
 #### About
 
-<p align="justify">
 Single node OCP Master designed to be used to develop/test locally (based on Origin).
 
 #### Installation Notes
@@ -19,10 +18,8 @@ has been added to the hosts file
 
 #### Outstanding Issues
 
-<p align="justify">
 Due to the way that Vagrant 2.x appears to incorrectly sort interfaces and map them to `adapters`, the current `Vagrantfile` breaks once OpenShift Origin has been installed and
 configured. This introduces several extra interfaces (e.g. docker0, tun0, br0, etc) which seems to break the sorting algorithm:
-</p>
 
 ```
 DEBUG network_interfaces: Unsorted list: ["eth0", "eth1", "docker0", "ovs-system", "vxlan_sys_4789", "tun0", "br0", "", "tun0", "br0", "eth0", "eth1", "lo", "docker0"]
@@ -30,15 +27,11 @@ DEBUG network_interfaces: Sorted list: ["", "eth1", "docker0", "eth0", "vxlan_sy
 DEBUG network_interfaces: Ethernet preferred sorted list: ["eth1", "eth0", "", "docker0", "vxlan_sys_4789", "tun0", "br0"]
 ```
 
-<p align="justify">
 The result of this is that `eth1` is passed back to Vagrant as `adapter 1` which is then configured incorrectly as a private network (host-only) interface rather than the
 NAT interface it should be. This causes `vagrant up` to hang indefinitely.
-</p>
 
-<p align="justify">
 To work around this you should bring up the initial box without provisioning it so that the network interface scripts can be correctly setup (before Origin is installed), then update
 the `Vagrantfile` to stop automatically configuring `adapter 2` and then provision the box so that Origin is installed and configured.
-</p>
 
 ```
 $ vagrant up ocptest --no-provision
@@ -48,9 +41,7 @@ $ vagrant provision ocptest
 
 #### Pre-requisites
 
-<p align="justify">
 This installation requires Vagrant (plus the Landrush plugin), Virtualbox and Ansible.
-</p>
 
 ```
 $ vagrant up ocptest
@@ -71,17 +62,13 @@ Deployment has been successfully tested with:
 * Ansible/OpenShift-Ansible Repository Release `release-3.7`
 * OpenShift Origin v3.7.0+7ed6862 (kubernetes v1.7.6+a08f5eeb62)
 
-<p align="justify">
 This repository has previously been used to provision older versions of Origin with older
 versions of Virtualbox/Vagrant/Ansible so previous commits could be used if older Origin
 versions cannot be used with the latest.
-</p>
 
 #### Deployment Instructions
 
-<p align="justify">
 See <b>Outstanding Issues</b> above for any deployment instruction updates. If none are present the VM can be provisioned with:
-</p>
 
 ```
 $ git clone https://github.com/wicksy/vagrant-openshift
@@ -91,9 +78,7 @@ $ vagrant up ocptest --provision --provider virtualbox
 
 #### Variables
 
-<p align="justify">
 The following Ansible variables can be used to override supplied values:
-</p>
 
 ```
 developer_user: The user created and designed to be used as a developer account (default "developer")
@@ -117,44 +102,30 @@ install_containerized: Whether to run containerized OpenShift Origin services (d
 openshift_release: What version of OpenShift Origin (containers) to use (default "3.7.0")
 ```
 
-<p align="justify">
 The `openshift_ansible_version` can be used to check out an older version of the repository in the event of unresolved issues and problems with
 the latest release (or any release).
-</p>
 
 #### OpenShift Web Console
 
-<p align="justify">
 Once the VM has been started and provisioned, the OpenShift Master Console should be available at:
-</p>
 
 https://ocptest.localdomain:8443
 
 #### Aggregated Logging
 
-<p align="justify">
 If `deploy_logging` is set to `true` archived pod logs will be available from the console (Pod view -> Logs tab) through a Kibana interface.
-</p>
 
-<p align="justify">
 <b>NOTE:</b> Persistent storage for Elasticsearch is not currently supported here as the repository is designed to provide a small development rig
 where data should generally be throw away (much like an `oc cluster up` environment).
-</p>
 
-<p align="justify">
 Persistent logging can be configured by further bespoking `templates/etc.ansible.hosts.j2` and supplying some of the `openshift_hosted_logging_storage_` variables.
-</p>
 
 #### Pod Metrics
 
-<p align="justify">
 If `deploy_metrics` is set to `true` pod metrics will be available from the console (Pod view -> Metrics tab).
-</p>
 
-<p align="justify">
 <b>NOTE:</b> As with Logging, persistent storage is not supported here but can be configured by modifying the hosts template with the appropriate
 `openshift_hosted_metrics_storage_` variables.
-</p>
 
 #### Memory
 
@@ -166,10 +137,8 @@ $ VM_MEMORY=8192 vagrant up ocptest
 
 #### Command Line Login
 
-<p align="justify">
 The installation comes with a `developer` user (password `developer` set in `defaults/main.yml`) as well as the `system:admin` user (which has cluster admin rights
 through the cluster-admin role):
-</p>
 
 ```
 [vagrant@ocptest ~]$ oc login -u developer
@@ -204,11 +173,8 @@ Using project "default".
 ```
 
 #### Persistent Volumes
-
-<p align="justify">
 NFS server is installed and setup to manage persistent volumes. By default 5 volumes are created but this
 can be increased through the `persistent_volumes` variable.
-</p>
 
 ```
 [vagrant@ocptest ~]$ sudo oc get pv
@@ -228,27 +194,21 @@ nfs-claim1   Bound     pv0005    2Gi        RWO           2s
 
 #### Landrush Wildcard Subdomains
 
-<p align="justify">
 Since the Vagrant Landrush Plugin supports [wildcard subdomains](https://github.com/vagrant-landrush/landrush/blob/master/doc/Usage.adoc#wildcard-subdomains) you should be able
 to reach a pod service through its route from your desktop browser (e.g. https://registry-console-default.ocptest.localdomain).
-</p>
 
 #### Tests
 
-<p align="justify">
 There are a number of tests implemented using the serverspec-like testing framework for Python [**testinfra**](https://github.com/philpep/testinfra). Tests
 can be run using the `runtests.sh` bash script in the `test` directory:
-</p>
 
 ```
 $ cd test
 $ ./runtests.sh
 ```
 
-<p align="justify">
 The script will bring up the vagrant machine if not already, setup a python virtual environment, install required pips, run a series of test
 packs through testinfra then clean up afterwards.
-</p>
 
 Sample output from one of the test packs (for services):
 
