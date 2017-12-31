@@ -90,3 +90,12 @@
     mode: 0755
   notify:
     - restart NetworkManager
+
+- name: Add /usr/local/bin into PATH
+  lineinfile:
+    path: "{{ item }}"
+    state: present
+    line: "export PATH=$PATH:/usr/local/bin/"
+  with_items:
+    - /root/.bash_profile
+    - /home/vagrant/.bash_profile
