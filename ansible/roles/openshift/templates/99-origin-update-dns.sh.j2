@@ -2,8 +2,9 @@
 #
 # Replace nameserver added by Origin configuration which will choose the eth0 IP which
 # is in fact being handled by Landrush and not by dnsmasq so any cluster.local service
-# fails to resolve which breaks basically everything. Therefore we use the IP defined
-# for the hostname on the assumption it's the private network added by Vagrant and
-# therefore will resolve via dnsmasq.
+# fails to resolve which breaks basically everything.
 #
-/bin/sed -i -e 's/^nameserver.*/nameserver {{ ansible_ssh_host }}/g' /etc/resolv.conf
+# We'll use 127.0.0.1 so resolution is handled by dnsmasq. This means it should resolve
+# SkyDNS entries (e.g. OpenShift services), external FQDNs, etc. 
+#
+/bin/sed -i -e 's/^nameserver.*/nameserver 127.0.0.1/g' /etc/resolv.conf
