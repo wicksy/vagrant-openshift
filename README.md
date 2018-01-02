@@ -15,6 +15,7 @@ Notes during installation/development:
 
 * https://github.com/openshift/openshift-ansible/issues/6435 still open at time of writing so `ansible_service_broker_image_prefix='ansibleplaybookbundle/origin-'`
 has been added to the hosts file
+* https://github.com/hashicorp/vagrant/issues/9329 opened to report interface sorting issue (see below)
 
 #### Outstanding Issues
 
@@ -32,6 +33,8 @@ NAT interface it should be. This causes `vagrant up` to hang indefinitely.
 
 To work around this you should bring up the initial box without provisioning it so that the network interface scripts can be correctly setup (before Origin is installed), then update
 the `Vagrantfile` to stop automatically configuring `adapter 2` and then provision the box so that Origin is installed and configured.
+
+Issue opened ([#9329](https://github.com/hashicorp/vagrant/issues/9329))
 
 ```
 $ vagrant up ocptest --no-provision
